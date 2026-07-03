@@ -1,0 +1,26 @@
+FLAGS= -Wall -Wextra
+
+run: minishell
+	@./minishell
+
+main.o: src/main.c
+	@echo "main.c changes compiling..."
+	@gcc $(FLAGS) -c src/main.c
+
+builtins.o: src/builtins.c
+	@echo "builtins.c changes compiling..."
+	@gcc $(FLAGS) -c src/builtins.c
+
+executor.o: src/executor.c
+	@echo "executor.c changes compiling..."
+	@gcc $(FLAGS) -c src/executor.c
+
+parser.o: src/parser.c
+	@echo "parser.c changes compiling..."
+	@gcc $(FLAGS) -c src/parser.c
+
+minishell: main.o parser.o builtins.o executor.o
+	@gcc $(FLAGS) main.o parser.o builtins.o executor.o -o minishell
+
+clean: 
+	@rm *.o minishell
