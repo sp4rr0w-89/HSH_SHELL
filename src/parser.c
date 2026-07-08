@@ -6,7 +6,6 @@
 
 char **parse(char tokens[], int *length){
     char *ptr = strtok(tokens, " ");
-
     char **str_array = malloc(25 *sizeof(char *));
     if(str_array == NULL) return NULL;
 
@@ -18,8 +17,8 @@ char **parse(char tokens[], int *length){
         str_array[i] =  strdup(ptr);
         count++;
         ptr = strtok(NULL, " ");
-            }
-    
+        }   
+
     *length = count;
     return str_array;
 
