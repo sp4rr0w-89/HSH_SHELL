@@ -1,25 +1,42 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include "parser.h"
 
+#define TOK_SIZE 64
 
 
 char **parse(char tokens[], int *length){
-    char *ptr = strtok(tokens, " ");
 
-    char **str_array = malloc(25 *sizeof(char *));
+    int capacity = TOK_SIZE;
+    int count = 0;
+    char *token = strtok(tokens, " ");
+
+    char **str_array = malloc(TOK_SIZE *sizeof(char *));
+
     if(str_array == NULL) return NULL;
-
-    int count =0;
-    for(int i = 0; i < 25; i++){
-        if(ptr == NULL){
-            break;
-        }
-        str_array[i] =  strdup(ptr);
-        count++;
-        ptr = strtok(NULL, " ");
-            }
     
+
+    while(token != NULL){
+        str_array[count] = token;
+        count++;
+
+        if(count +1 >= capacity){
+
+            capacity += TOK_SIZE;
+            str_array = realloc(str_array, capacity * sizeof(char *));
+            if(str_array == NULL) {
+                perror("Error reallocating token buffer");
+                break;
+            }
+
+        }
+        token = strtok(NULL, " ");
+
+    }   
+        
+    str_array[count] = NULL;
     *length = count;
     return str_array;
 
