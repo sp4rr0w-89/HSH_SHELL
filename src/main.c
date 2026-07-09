@@ -5,15 +5,11 @@
 #include "executor.h"
 #include <signal.h>
 
-
 void handle_sigint(int sig){
     (void)sig;
     printf("\n\033[32m| hkms_shell:$> \033[0m");
     fflush(stdout); 
 }
-
-
-
 
 int main(){
         
@@ -45,7 +41,6 @@ int main(){
             
         }
 
-        
     }
    for(int i = 0; i < arg_len; i++){
         free(tokens[i]);

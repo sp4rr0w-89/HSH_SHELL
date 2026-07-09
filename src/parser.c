@@ -6,7 +6,6 @@
 
 #define TOK_SIZE 64
 
-
 char **parse(char tokens[], int *length){
 
     int capacity = TOK_SIZE;
@@ -17,7 +16,6 @@ char **parse(char tokens[], int *length){
 
     if(str_array == NULL) return NULL;
     
-
     while(token != NULL){
         str_array[count] = token;
         count++;
