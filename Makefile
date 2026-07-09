@@ -1,7 +1,10 @@
-FLAGS= -Wall -Wextra
+FLAGS= -Wall -Wextra -g
 
 run: minishell
 	@./minishell
+
+debug: minishell
+	@gdb minishell	
 
 main.o: src/main.c
 	@echo "main.c changes compiling..."

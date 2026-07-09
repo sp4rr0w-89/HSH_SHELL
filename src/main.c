@@ -41,11 +41,6 @@ int main(){
             
             input[strcspn(input, "\n")] = '\0';
             tokens = parse(input, &arg_len);
-
-            if(strcmp(tokens[0], "out") == 0 && arg_len == 1){
-                return 0;
-               }
-               
             execute(tokens);   
             
         }
