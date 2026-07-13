@@ -4,11 +4,14 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "builtins.h"
 
 int execute(char **tokens){
 
-    pid_t pid= fork();
-    int status;
+    if(run_builtin(tokens) == 0){
+        pid_t pid= fork();
+        int status;
+
 
             if(pid == 0){
                 if(execvp(tokens[0], tokens)== -1){
@@ -23,6 +26,6 @@ int execute(char **tokens){
                     printf("Error waiting for child process");
                 } 
             }
-        
-        return 0;
     }
+    return 0;
+}

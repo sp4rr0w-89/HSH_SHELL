@@ -4,12 +4,10 @@
 #include "parser.h"
 #include "executor.h"
 #include <signal.h>
+#include <unistd.h>
 
-void handle_sigint(int sig){
-    (void)sig;
-    printf("\n\033[32m| hkms_shell:$> \033[0m");
-    fflush(stdout); 
-}
+char* cur_dir();
+void handle_sigint(int sig);
 
 int main(){
         
@@ -21,7 +19,8 @@ int main(){
     char **tokens; 
 
    while(1){
-        printf("\n\033[32m| hkms_shell:$> \033[0m");
+        
+        printf("\n\033[32m| hkms_shell:%s$> \033[0m", cur_dir());
 
         if(fgets(input,sizeof(input), stdin) == NULL)
         {
@@ -33,12 +32,10 @@ int main(){
         } 
         else if (strlen(input) > 1 )
         {
-            printf("\n");
-            
+            printf("\n");            
             input[strcspn(input, "\n")] = '\0';
             tokens = parse(input, &arg_len);
-            execute(tokens);   
-            
+            execute(tokens);               
         }
 
     }
@@ -47,4 +44,17 @@ int main(){
     }
     free(tokens);
     return 0;
+}
+
+char* cur_dir(){
+    static char cd[1024];
+    if(getcwd(cd, sizeof(cd)) == NULL) perror("Error getting current directory");
+    char *pCd = cd;
+    return pCd;
+}
+
+void handle_sigint(int sig){
+    (void)sig;
+    printf("\n\033[32m| hkms_shell:%s$> \033[0m", cur_dir());
+    fflush(stdout); 
 }
