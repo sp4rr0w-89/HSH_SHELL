@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 
 typedef struct {
@@ -8,14 +9,16 @@ typedef struct {
 } CMD;
 
 int sh_cd(char **tokens, int args);
+int sh_exit(char **tokens, int args);
 
 int run_builtin(char **tokens){
     
     CMD commands[]=
     {
         {.name = "cd", .func = sh_cd},
+        {.name = "exit", .func = sh_exit}
     };
-    
+
     int n_commands = sizeof(commands) / sizeof(commands[0]);
     int n_tokens = 0;
 
@@ -48,5 +51,17 @@ int sh_cd(char **tokens, int args){
     }
 
     return 0;
+}
+
+int sh_exit(char **tokens, int args){
+    if(args > 2){
+        printf("exit:: Too many argumets\n");
+        return 0;
+    }
+    if(tokens[1]!= NULL){
+        exit(atoi(tokens[1]));
+    }
+
+    exit(0);
 }
 
