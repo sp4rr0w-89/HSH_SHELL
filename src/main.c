@@ -34,7 +34,7 @@ int main(){
         {
             printf("\n");            
             input[strcspn(input, "\n")] = '\0';
-            tokens = parse(input, &arg_len);
+            tokens = parse(input, &arg_len, " ");
             execute(tokens);               
         }
 

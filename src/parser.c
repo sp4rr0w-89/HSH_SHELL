@@ -6,11 +6,11 @@
 
 #define TOK_SIZE 64
 
-char **parse(char tokens[], int *length){
+char **parse(char tokens[], int *length, char delim[]){
 
     int capacity = TOK_SIZE;
     int count = 0;
-    char *token = strtok(tokens, " ");
+    char *token = strtok(tokens, delim);
 
     char **str_array = malloc(TOK_SIZE *sizeof(char *));
 
@@ -30,7 +30,7 @@ char **parse(char tokens[], int *length){
             }
 
         }
-        token = strtok(NULL, " ");
+        token = strtok(NULL, delim);
 
     }   
         

@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include "parser.h"
 
 typedef struct {
     char name[25];
@@ -10,13 +11,15 @@ typedef struct {
 
 int sh_cd(char **tokens, int args);
 int sh_exit(char **tokens, int args);
+int sh_export(char **tokens, int args);
 
 int run_builtin(char **tokens){
     
     CMD commands[]=
     {
         {.name = "cd", .func = sh_cd},
-        {.name = "exit", .func = sh_exit}
+        {.name = "exit", .func = sh_exit},
+        {.name = "export", .func = sh_export}
     };
 
     int n_commands = sizeof(commands) / sizeof(commands[0]);
@@ -63,5 +66,22 @@ int sh_exit(char **tokens, int args){
     }
 
     exit(0);
+}
+
+int sh_export(char **tokens, int args){
+    int export_args = 0;
+    char **env_variable = parse(tokens[1], &export_args, "=");
+    
+    if(export_args<2){
+        printf("Please provide the name and value of the variable to set. Format: name=value\n");
+        return 1;
+    } else if(args > 2){
+        printf("Too many arguments");
+        return 1;
+    }
+    if(setenv(env_variable[0], env_variable[1], 0) != 0){
+        printf("Error setting environmental variable");
+    } 
+    return 0;
 }
 
