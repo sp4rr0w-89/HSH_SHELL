@@ -3,5 +3,5 @@
 
 
 
-int execute(char **tokens);
+int execute(CMD_SQ *cmd_arr);
 #endif

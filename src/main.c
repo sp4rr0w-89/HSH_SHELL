@@ -16,7 +16,7 @@ int main(){
     char input[1024];
 
     int arg_len = 0;
-    char **tokens; 
+    CMD_SQ *cmd_arr; 
 
    while(1){
         
@@ -34,15 +34,16 @@ int main(){
         {
             printf("\n");            
             input[strcspn(input, "\n")] = '\0';
-            tokens = parse(input, &arg_len, " ");
-            execute(tokens);               
+            cmd_arr = parse(input, &arg_len, " ");
+            execute(cmd_arr);               
         }
 
     }
-   for(int i = 0; i < arg_len; i++){
-        free(tokens[i]);
-    }
-    free(tokens);
+    
+//    for(int i = 0; i < arg_len; i++){
+//         free(tokens[i]);
+//     }
+//     free(tokens);
     return 0;
 }
 

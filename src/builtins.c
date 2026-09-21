@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.h"
+#include "utils.h"
 
 typedef struct {
     char name[25];
@@ -70,9 +71,10 @@ int sh_exit(char **tokens, int args){
 
 int sh_export(char **tokens, int args){
     int export_args = 0;
-    char **env_variable = parse(tokens[1], &export_args, "=");
+    CMD_SQ *parsed = parse(tokens[1], &export_args, "=");
+    char **env_variable = arr_to_ptr(parsed[0].tokens, parsed[0].tok_count);
     
-    if(export_args<2){
+    if(parsed[0].tok_count<2){
         printf("Please provide the name and value of the variable to set. Format: name=value\n");
         return 1;
     } else if(args > 2){
